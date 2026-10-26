@@ -6,6 +6,8 @@ public class Projectile2D : MonoBehaviour
     [Header("Movement")]
     [SerializeField, Min(0f)]
     private float speed = 30f;
+    [SerializeField]
+    public Vector2 direction = Vector2.zero;
 
     [SerializeField, Min(0.001f)]
     private float maxLifetime = 5f;
@@ -94,7 +96,10 @@ public class Projectile2D : MonoBehaviour
         }
 
         Vector2 start = transform.position;
-        Vector2 direction = transform.right.normalized;
+        if(direction == Vector2.zero)
+        {
+            direction = transform.right.normalized;//TODO : debug temp, remove later
+        }
         Vector2 end = start + direction * speed * Time.deltaTime;
 
         ProcessSegment(start, end);
@@ -111,8 +116,6 @@ public class Projectile2D : MonoBehaviour
         RaycastHit2D wallHit = Physics2D.Linecast(start, end, wallLayerMask);
 
         bool hitWall = wallHit.collider != null;
-
-        Vector2 direction = (end - start).normalized;
 
         // If a wall is hit, restrict the armor check only up to the front of that wall.
         Vector2 armorEnd = hitWall ? wallHit.point - direction * 0.001f : end;
