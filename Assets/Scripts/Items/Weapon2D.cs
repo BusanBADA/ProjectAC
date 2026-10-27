@@ -12,10 +12,6 @@ public class Weapon2D : MonoBehaviour
     [SerializeField] private bool autoFire = true;
     [SerializeField, Min(0.01f)] private float fireInterval = 1.0f;
 
-    [Header("Test Rotation")]
-    [SerializeField] private bool enableTestRotation = true;
-    [SerializeField, Min(0f)] private float rotationSpeed = 90f;
-
     private float nextFireTime;
 
     private void Update()
