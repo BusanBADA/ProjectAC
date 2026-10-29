@@ -7,11 +7,15 @@ public class EliminationMode : MonoBehaviour
     // 적들의 체력 컴포넌트를 저장
     private List<MechHull2D> enemies = new List<MechHull2D>();
 
+    public IReadOnlyList<MechHull2D> Enemies => enemies;
+
     private int remainingEnemies;
     private bool isCleared = false;
 
     // 섬멸전 클리어 이벤트
-    public event Action OnCleared;
+    public event Action onCleared;
+
+    public bool isRunning;
 
     private void Start()
     {
