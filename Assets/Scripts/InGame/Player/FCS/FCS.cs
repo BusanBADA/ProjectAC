@@ -32,6 +32,10 @@ public class FCS : MonoBehaviour
     [SerializeField] private PolygonCollider2D triangleSensor;
     [SerializeField] private CircleCollider2D circleSensor;
 
+    private void Start()
+    {
+
+    }
     private void Update()
     {
         RotateToRange();
@@ -59,13 +63,13 @@ public class FCS : MonoBehaviour
     {
         if (eliminationMode != null)
         {
-            IReadOnlyList<MechHull2D> enemIReadOnlyList = eliminationMode.Enemies;
+            IReadOnlyList<MechHull2D> enemyIReadOnlyList = eliminationMode.Enemies;
 
-            enemies = new EnemyData[enemIReadOnlyList.Count];
+            enemies = new EnemyData[enemyIReadOnlyList.Count];
 
-            for (int i =0; i < enemIReadOnlyList.Count; i++)
+            for (int i =0; i < enemyIReadOnlyList.Count; i++)
             {
-                MechHull2D enemyHull = enemIReadOnlyList[i];
+                MechHull2D enemyHull = enemyIReadOnlyList[i];
 
                 if (enemyHull != null)
                 {
@@ -78,6 +82,11 @@ public class FCS : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void UpdateList()
+    {
+
     }
 
     private void LookNearEnemy()
@@ -94,7 +103,8 @@ public class FCS : MonoBehaviour
                 nearestDistance = enemyData.distance;
             }
         }
-
+        //EliminationMode의 적을 받아서 FCS에 저장한다. TriangleSensor와 CircleSensor에서도 리스트를 받아서 FCS에 저장한다.
+        //
         //범위 내의 적을 리스트에 담는다. 범위 밖으로 나간 적은 리스트에서 뺀다.
         //담은 적 거리의 우선순위를 매긴다. 1순위 부채꼴, 2순위 원.
         //1순위에 해당하는 적을 쳐다본다.
