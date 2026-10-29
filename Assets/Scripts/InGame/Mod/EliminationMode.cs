@@ -15,8 +15,14 @@ public class EliminationMode : MonoBehaviour
 
     private void Start()
     {
+        StartElimination();
+    }
+    
+    private void StartElimination()
+    {
         FindEnemies();
     }
+
 
     private void FindEnemies()
     {
