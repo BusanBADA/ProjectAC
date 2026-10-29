@@ -12,7 +12,7 @@ public class InputController : MonoBehaviour
     public MoveType moveType;
 
     Rigidbody2D playerRigid;
-    Vector2 inputVec;
+    public Vector2 inputVec;
 
     [SerializeField]
     private float limitWeightMaxSpeed;
@@ -40,8 +40,6 @@ public class InputController : MonoBehaviour
 
     private void HowtoMove(MoveType _moveType)
     {
-        LimitSpeed();
-
         if (_moveType == MoveType.Leg)
         {
             LegMove();
@@ -50,6 +48,8 @@ public class InputController : MonoBehaviour
         {
             FlyMove();
         }
+
+        LimitSpeed();
     }
 
     private void LegMove()
@@ -74,7 +74,7 @@ public class InputController : MonoBehaviour
                 float dot = Vector2.Dot(inputVec, velocity.normalized);
                 if (dot < 0)
                 {
-                    playerRigid.linearVelocity *= -dot;
+                    playerRigid.linearVelocity *= stopFric;  //new Vector2(0,0);//*=-dot
                 }
             }
             Vector2 force = inputVec * PlayerInfo.Instance.axel;
