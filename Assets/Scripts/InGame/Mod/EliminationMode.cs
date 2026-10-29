@@ -22,9 +22,14 @@ public class EliminationMode : MonoBehaviour
         StartElimination();
     }
     
-    private void StartElimination()
+    public void StartElimination()
     {
+        if (isRunning)
+            return;
+
         FindEnemies();
+
+        isRunning = true;
     }
 
 
@@ -122,6 +127,6 @@ public class EliminationMode : MonoBehaviour
 
         Debug.Log("[EliminationMode] 섬멸전 클리어!");
 
-        OnCleared?.Invoke();
+        onCleared?.Invoke();
     }
 }
