@@ -16,7 +16,7 @@ public class RoomClearHandler : MonoBehaviour
 
     private void OnEnable()
     {
-        eliminationMode.OnCleared += HandleRoomClear;
+        eliminationMode.onCleared += HandleRoomClear;
     }
     private void HandleRoomClear()
     {
@@ -40,7 +40,7 @@ public class RoomClearHandler : MonoBehaviour
 
     private void OnDisable()
     {
-        eliminationMode.OnCleared -= HandleRoomClear;
+        eliminationMode.onCleared -= HandleRoomClear;
     }
 
 
