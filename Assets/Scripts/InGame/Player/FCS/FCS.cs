@@ -16,6 +16,8 @@ public class FCS : MonoBehaviour
     private Rigidbody2D playerRigid;
     [SerializeField]
     private Transform upperBodyTrs;
+    [SerializeField]
+    private float rotateSpeed;
 
     [Header("EliminationMode")]
     [SerializeField]
@@ -46,34 +48,6 @@ public class FCS : MonoBehaviour
         EnemyInRangeInit();
         FindNearest();
         RotateToRange();
-    }
-
-    private void RotateToRange()//범위를 진행방향에 따라 회전시킴.
-    {
-        Vector2 playerInput = playerRigid != null ? playerRigid.linearVelocity : Vector2.zero;
-
-        if (enemyInTriangle.Count == 0 && enemyInCircle.Count == 0)
-        {
-            if (playerInput.sqrMagnitude > 0.001f)
-            {
-                float angle = Mathf.Atan2(playerInput.y, playerInput.x) * Mathf.Rad2Deg - 90f;
-
-                Quaternion targetRotation = Quaternion.Euler(0, 0, angle);
-
-                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5f);
-                if (upperBodyTrs != null) upperBodyTrs.rotation = transform.rotation;//Mouse
-            }
-        }
-        else
-        {
-            float angle = Mathf.Atan2(nearestVec.y, nearestVec.x) * Mathf.Rad2Deg - 90f;
-
-            Quaternion targetRotation = Quaternion.Euler(0, 0, angle);
-
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5f);
-            if (upperBodyTrs != null) upperBodyTrs.rotation = transform.rotation;
-        }
-
     }
 
     private void EnemiesInit()//mode에서 받아온 enemy를 struct로 만듦.
@@ -112,8 +86,7 @@ public class FCS : MonoBehaviour
             }
         }
     }
-
-    private void EnemyInRangeInit() // 범위 내에 들어온 적들을 리스트에 넣음.
+    private void EnemyInRangeInit() // 범위 내에 들어온 적들을 리스트에 넣음. //AI
     {
         if (enemies != null)
         {
@@ -178,7 +151,6 @@ public class FCS : MonoBehaviour
             }
         }
     }
-
     private void FindNearest()
     {
         nearestDistance = Mathf.Infinity;
@@ -213,7 +185,33 @@ public class FCS : MonoBehaviour
             }
         }
     }
+    private void RotateToRange()//범위를 진행방향에 따라 회전시킴.
+    {
+        Vector2 playerInput = playerRigid != null ? playerRigid.linearVelocity : Vector2.zero;
 
+        if (enemyInTriangle.Count == 0 && enemyInCircle.Count == 0)
+        {
+            if (playerInput.sqrMagnitude > 0.001f)
+            {
+                float angle = Mathf.Atan2(playerInput.y, playerInput.x) * Mathf.Rad2Deg - 90f;
+
+                Quaternion targetRotation = Quaternion.Euler(0, 0, angle);
+
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotateSpeed);
+                if (upperBodyTrs != null) upperBodyTrs.rotation = transform.rotation;//Mouse
+            }
+        }
+        else
+        {
+            float angle = Mathf.Atan2(nearestVec.y, nearestVec.x) * Mathf.Rad2Deg - 90f;
+
+            Quaternion targetRotation = Quaternion.Euler(0, 0, angle);
+
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotateSpeed/5f);
+            if (upperBodyTrs != null) upperBodyTrs.rotation = transform.rotation;
+        }
+
+    }
     private void UpdateListData(List<EnemyData> list)
     {
         for (int i = 0; i < list.Count; i++)
@@ -228,5 +226,5 @@ public class FCS : MonoBehaviour
                 }
             }
         }
-    }
+    } //AI
 }

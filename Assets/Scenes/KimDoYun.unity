@@ -187,7 +187,7 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 5
+  m_Radius: 7
 --- !u!114 &89794083
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -517,8 +517,8 @@ GameObject:
   m_Component:
   - component: {fileID: 802505712}
   - component: {fileID: 802505716}
-  - component: {fileID: 802505713}
   - component: {fileID: 802505714}
+  - component: {fileID: 802505717}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -544,23 +544,6 @@ Transform:
   - {fileID: 902306153}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &802505713
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 802505711}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd733c66574f38740afc6efbce04e280, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::InputController
-  moveType: 2
-  inputVec: {x: 0, y: 0}
-  limitWeightMaxSpeed: 0
-  normalMaxSpeed: 0
-  stopFric: 0.8
 --- !u!114 &802505714
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -604,6 +587,23 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &802505717
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 802505711}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd733c66574f38740afc6efbce04e280, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InputController
+  moveType: 2
+  inputVec: {x: 0, y: 0}
+  limitWeightMaxSpeed: 0
+  normalMaxSpeed: 0
+  stopFric: 0.8
 --- !u!1 &867327438
 GameObject:
   m_ObjectHideFlags: 0
@@ -701,6 +701,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FCS
   playerRigid: {fileID: 802505716}
   upperBodyTrs: {fileID: 116535721}
+  rotateSpeed: 5
   eliminationMode: {fileID: 867327441}
   triangleSensor: {fileID: 1225676714}
   circleSensor: {fileID: 89794083}
@@ -948,8 +949,8 @@ PolygonCollider2D:
   m_Points:
     m_Paths:
     - - {x: 0, y: 0}
-      - {x: 2, y: 7}
-      - {x: -2, y: 7}
+      - {x: 3, y: 9}
+      - {x: -3, y: 9}
   m_UseDelaunayMesh: 1
 --- !u!114 &1225676714
 MonoBehaviour:
