@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public struct EnemyData
 {
@@ -51,30 +50,30 @@ public class FCS : MonoBehaviour
 
     private void RotateToRange()//범위를 진행방향에 따라 회전시킴.
     {
-        if(enemyInTriangle.Count == 0 && enemyInCircle.Count == 0)
+        Vector2 playerInput = playerRigid != null ? playerRigid.linearVelocity : Vector2.zero;
+
+        if (enemyInTriangle.Count == 0 && enemyInCircle.Count == 0)
         {
-            Vector2 playerInput = playerRigid.linearVelocity;
+            if (playerInput.sqrMagnitude > 0.001f)
+            {
+                float angle = Mathf.Atan2(playerInput.y, playerInput.x) * Mathf.Rad2Deg - 90f;
 
-            float angle = Mathf.Atan2(playerInput.y, playerInput.x) * Mathf.Rad2Deg;
+                Quaternion targetRotation = Quaternion.Euler(0, 0, angle);
 
-            angle -= 90f;
-
-            Quaternion targetRotation = Quaternion.Euler(0, 0, angle);
-
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5f);
-            upperBodyTrs.rotation = transform.rotation;//Mouse
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5f);
+                if (upperBodyTrs != null) upperBodyTrs.rotation = transform.rotation;//Mouse
+            }
         }
         else
         {
-            float angle = Mathf.Atan2(nearestVec.y, nearestVec.x) * Mathf.Rad2Deg;
-            angle -= 90f;
+            float angle = Mathf.Atan2(nearestVec.y, nearestVec.x) * Mathf.Rad2Deg - 90f;
 
             Quaternion targetRotation = Quaternion.Euler(0, 0, angle);
 
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5f);
-            upperBodyTrs.rotation = transform.rotation; 
+            if (upperBodyTrs != null) upperBodyTrs.rotation = transform.rotation;
         }
-        
+
     }
 
     private void EnemiesInit()//mode에서 받아온 enemy를 struct로 만듦.
@@ -83,62 +82,97 @@ public class FCS : MonoBehaviour
         {
             IReadOnlyList<MechHull2D> enemyIReadOnlyList = eliminationMode.Enemies;
 
-            enemies = new EnemyData[enemyIReadOnlyList.Count];
+            if (enemies == null || enemies.Length != enemyIReadOnlyList.Count)
+            {
+                enemies = new EnemyData[enemyIReadOnlyList.Count];
+            }
+
+            Vector2 currentPos = transform.position;
 
             for (int i = 0; i < enemyIReadOnlyList.Count; i++)
             {
                 MechHull2D enemyHull = enemyIReadOnlyList[i];
 
-                if (enemyHull != null)
+                // [수정] 이미 사망했거나 null인 적은 제외 처리 (LateUpdate 전 딜레이 방지)
+                if (enemyHull != null && enemyHull.gameObject != null && !enemyHull.IsDead)
                 {
+                    Vector2 enemyPos = enemyHull.transform.position;// 매 프레임 위치 기반으로 방향과 거리를 갱신.
+
                     enemies[i] = new EnemyData//구조체 도중의 코드는 못 사용함.
                     {
                         enemyObj = enemyHull.gameObject,
-                        direction = (enemyHull.gameObject.transform.position - transform.position).normalized,
-                        distance = Vector2.Distance(transform.position, enemyHull.gameObject.transform.position)
+                        direction = (enemyPos - currentPos).normalized,
+                        distance = Vector2.Distance(currentPos, enemyPos)
                     };
+                }
+                else
+                {
+                    enemies[i] = new EnemyData { enemyObj = null }; // 파괴되거나 죽은 적 처리
                 }
             }
         }
     }
 
-    private void EnemyInRangeInit()//범위 내에 들어온 적들을 리스트에 넣음.
+    private void EnemyInRangeInit() // 범위 내에 들어온 적들을 리스트에 넣음.
     {
         if (enemies != null)
         {
             foreach (EnemyData enemy in enemies)
             {
-                // 1. 삼각형 센서 처리
-                if (triangleSensor.enemyList.Contains(enemy.enemyObj))
+                if (enemy.enemyObj == null) continue;
+
+                //삼각형 센서 처리
+                bool isInTriangleList = false;
+                foreach (EnemyData inTriangle in enemyInTriangle)
                 {
-                    // 이미 리스트에 없을 때만 추가 (중복 방지)
-                    if (!enemyInTriangle.Contains(enemy))
+                    if (inTriangle.enemyObj == enemy.enemyObj)
+                    {
+                        isInTriangleList = true;
+                        break;
+                    }
+                }
+
+                if (triangleSensor != null && triangleSensor.enemyList != null && triangleSensor.enemyList.Contains(enemy.enemyObj))
+                {
+                    if (!isInTriangleList)
                     {
                         enemyInTriangle.Add(enemy);
                     }
                 }
                 else
                 {
-                    // 센서 밖으로 나갔고 리스트에 들어있다면 제거
-                    if (enemyInTriangle.Contains(enemy))
+                    if (isInTriangleList)
                     {
-                        enemyInTriangle.Remove(enemy);
+                        // 오브젝트 기준으로 리스트에서 제거
+                        enemyInTriangle.RemoveAll(inTriangle => inTriangle.enemyObj == enemy.enemyObj);
                     }
                 }
 
-                // 2. 원형 센서 처리
-                if (circleSensor.enemyList.Contains(enemy.enemyObj))
+
+                //원형 센서 처리
+                bool isInCircleList = false;
+                foreach (EnemyData inCircle in enemyInCircle)
                 {
-                    if (!enemyInCircle.Contains(enemy))
+                    if (inCircle.enemyObj == enemy.enemyObj)
+                    {
+                        isInCircleList = true;
+                        break;
+                    }
+                }
+
+                if (circleSensor != null && circleSensor.enemyList != null && circleSensor.enemyList.Contains(enemy.enemyObj))
+                {
+                    if (!isInCircleList)
                     {
                         enemyInCircle.Add(enemy);
                     }
                 }
                 else
                 {
-                    if (enemyInCircle.Contains(enemy))
+                    if (isInCircleList)
                     {
-                        enemyInCircle.Remove(enemy);
+                        // 오브젝트 기준으로 리스트에서 제거
+                        enemyInCircle.RemoveAll(inCircle => inCircle.enemyObj == enemy.enemyObj);
                     }
                 }
             }
@@ -148,6 +182,13 @@ public class FCS : MonoBehaviour
     private void FindNearest()
     {
         nearestDistance = Mathf.Infinity;
+        nearestVec = Vector2.zero; // [수정] 타겟이 없을 때 이전 방향이 남지 않도록 초기화
+
+        enemyInTriangle.RemoveAll(e => e.enemyObj == null);
+        enemyInCircle.RemoveAll(e => e.enemyObj == null);
+
+        UpdateListData(enemyInTriangle);
+        UpdateListData(enemyInCircle);
 
         if (enemyInTriangle.Count > 0)
         {
@@ -160,7 +201,7 @@ public class FCS : MonoBehaviour
                 }
             }
         }
-        else if(enemyInTriangle.Count == 0)
+        else if (enemyInCircle.Count > 0) // [수정] 안전하게 Count가 0보다 클 때만 순회
         {
             foreach (EnemyData enemy in enemyInCircle)
             {
@@ -173,10 +214,19 @@ public class FCS : MonoBehaviour
         }
     }
 
+    private void UpdateListData(List<EnemyData> list)
+    {
+        for (int i = 0; i < list.Count; i++)
+        {
+            // enemies 배열에서 해당 적의 최신 데이터를 찾아 리스트를 갱신
+            for (int j = 0; j < enemies.Length; j++)
+            {
+                if (enemies[j].enemyObj == list[i].enemyObj)
+                {
+                    list[i] = enemies[j];
+                    break;
+                }
+            }
+        }
+    }
 }
-
-//EliminationMode의 적을 받아서 FCS에 저장한다. TriangleSensor와 CircleSensor에서도 리스트를 받아서 FCS에 저장한다.
-//범위 내의 적을 리스트에 담는다. 범위 밖으로 나간 적은 리스트에서 뺀다.
-//담은 적 거리의 우선순위를 매긴다. 1순위 삼각형, 2순위 원.
-//1순위에 해당하는 적을 쳐다본다.
-//리스트는 항상 업데이트되어야한다.

@@ -5,9 +5,15 @@ public class CircleSensor : MonoBehaviour
 {
     public List<GameObject> enemyList = new List<GameObject>();
 
+    private void Update()
+    {
+        // 적이 도중에 파괴(Destroy)되었을 경우 리스트에서 안전하게 제거
+        enemyList.RemoveAll(enemy => enemy == null);
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Armor"))
         {
             if (!enemyList.Contains(collision.gameObject))
             {
@@ -18,7 +24,7 @@ public class CircleSensor : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Armor"))
         {
             if (enemyList.Contains(collision.gameObject))
             {
