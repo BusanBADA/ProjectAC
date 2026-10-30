@@ -200,6 +200,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68c5cb6f54b092a4cab5093e4539f39a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CircleSensor
+  enemyList: []
 --- !u!1 &104539196
 GameObject:
   m_ObjectHideFlags: 0
@@ -544,7 +545,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.12454414, g: 1, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -707,7 +708,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 902306152}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9e47a25e42e255243aa75d8eedbb22fa, type: 3}
   m_Name: 
@@ -715,8 +716,8 @@ MonoBehaviour:
   playerRigid: {fileID: 802505716}
   upperBodyTrs: {fileID: 116535721}
   eliminationMode: {fileID: 1240783305}
-  triangleSensor: {fileID: 1225676713}
-  circleSensor: {fileID: 89794082}
+  triangleSensor: {fileID: 1225676714}
+  circleSensor: {fileID: 89794083}
 --- !u!50 &902306157
 Rigidbody2D:
   serializedVersion: 5
@@ -976,6 +977,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1ded40ad10b82f4aa3859ed49fbd895, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TriangleSensor
+  enemyList: []
 --- !u!1 &1240783304
 GameObject:
   m_ObjectHideFlags: 0
@@ -1088,7 +1090,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.12454414, g: 1, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
