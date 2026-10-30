@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 public class MainMenuController : MonoBehaviour
 {
     [Header("Scene Settings")]
-    public string gmaeSceneName = "GameScene";
+    [SerializeField] private string gmaeSceneName = "InGameScene";
 
    public void StartGame() 
     {
