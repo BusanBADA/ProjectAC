@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c47425626ae03d4fa4f7b93907bd1f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Projectile2D
-  speed: 10
+  speed: 60
   direction: {x: 0, y: 0}
   maxLifetime: 5
   penetrationPower: 100
