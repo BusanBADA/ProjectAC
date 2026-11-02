@@ -46,10 +46,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoomDoor
   direction: 1
-  closedDoorObjects:
-  - {fileID: 4868854048679736938}
-  blockingColliders:
-  - {fileID: 1740408640340031219}
+  closedVisual: {fileID: 0}
+  blockingCollider: {fileID: 0}
 --- !u!1 &745655976050244554
 GameObject:
   m_ObjectHideFlags: 0
@@ -1435,6 +1433,7 @@ MonoBehaviour:
   - {fileID: 1035858111872658777}
   - {fileID: 5082628773181688463}
   - {fileID: 6439980989833326541}
+  floorTilemap: {fileID: 4653615929672684828}
   lockDoorsOnEnter: 1
   isCleared: 0
 --- !u!1 &6001222162349263596
@@ -6474,10 +6473,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoomDoor
   direction: 0
-  closedDoorObjects:
-  - {fileID: 2986010526735641663}
-  blockingColliders:
-  - {fileID: 4566721872442063730}
+  closedVisual: {fileID: 0}
+  blockingCollider: {fileID: 0}
 --- !u!1 &7873831243246368998
 GameObject:
   m_ObjectHideFlags: 0
@@ -6524,10 +6521,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoomDoor
   direction: 0
-  closedDoorObjects:
-  - {fileID: 9156387225873165567}
-  blockingColliders:
-  - {fileID: 2501827177030461220}
+  closedVisual: {fileID: 0}
+  blockingCollider: {fileID: 0}
 --- !u!1 &8130218390127060496
 GameObject:
   m_ObjectHideFlags: 0
@@ -6620,10 +6615,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoomDoor
   direction: 1
-  closedDoorObjects:
-  - {fileID: 8213122402550295068}
-  blockingColliders:
-  - {fileID: 275085219534151889}
+  closedVisual: {fileID: 0}
+  blockingCollider: {fileID: 0}
 --- !u!1 &8213122402550295068
 GameObject:
   m_ObjectHideFlags: 0

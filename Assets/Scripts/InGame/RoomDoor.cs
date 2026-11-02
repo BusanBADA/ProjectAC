@@ -1,36 +1,63 @@
+
 using UnityEngine;
 
 public class RoomDoor : MonoBehaviour
 {
     public DoorDirection direction;
-    [Tooltip("Optional objects to disable when this door is connected/open.")]
-    public GameObject[] closedDoorObjects;
-    public Collider2D[] blockingColliders;
+
+    [Tooltip("Visual shown while the door is closed.")]
+    public GameObject closedVisual;
+
+    public Collider2D blockingCollider;
+
+    public bool IsConnected => isConnected;
+    public bool IsOpen => isOpen;
+
+    private bool isConnected;
+    private bool isOpen;
 
     public void SetConnected(bool connected)
     {
-        bool closed = !connected;
+        isConnected = connected;
 
-        if (closedDoorObjects != null)
+        // Connection does not mean the door is open.
+        // Every door starts closed.
+        CloseDoor();
+    }
+
+    public void Open()
+    {
+        // An unconnected door can never be opened.
+        if (!isConnected)
         {
-            foreach (var obj in closedDoorObjects)
-            {
-                if (obj != null)
-                {
-                    obj.SetActive(closed);
-                }
-            }
+            return;
         }
 
-        if (blockingColliders != null)
+        isOpen = true;
+
+        if (closedVisual != null)
         {
-            foreach (var col in blockingColliders)
-            {
-                if (col != null)
-                {
-                    col.enabled = closed;
-                }
-            }
+            closedVisual.SetActive(false);
+        }
+
+        if (blockingCollider != null)
+        {
+            blockingCollider.enabled = false;
+        }
+    }
+
+    private void CloseDoor()
+    {
+        isOpen = false;
+
+        if (closedVisual != null)
+        {
+            closedVisual.SetActive(true);
+        }
+
+        if (blockingCollider != null)
+        {
+            blockingCollider.enabled = true;
         }
     }
 }
