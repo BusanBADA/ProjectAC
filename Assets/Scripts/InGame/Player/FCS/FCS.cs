@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public struct EnemyData
 {
@@ -16,6 +17,9 @@ public class FCS : MonoBehaviour
     private Rigidbody2D playerRigid;
     [SerializeField]
     private Transform upperBodyTrs;
+    [SerializeField]
+    private Transform lowerBodyTrs;
+
     [SerializeField]
     private float rotateSpeed;
 
@@ -47,7 +51,8 @@ public class FCS : MonoBehaviour
         EnemiesInit();
         EnemyInRangeInit();
         FindNearest();
-        RotateToRange();
+        RotateUpperBody();
+        RotateLowerBody();
     }
 
     private void EnemiesInit()//mode에서 받아온 enemy를 struct로 만듦.
@@ -185,7 +190,7 @@ public class FCS : MonoBehaviour
             }
         }
     }
-    private void RotateToRange()//범위를 진행방향에 따라 회전시킴.
+    private void RotateUpperBody()//범위를 진행방향에 따라 회전시킴.
     {
         Vector2 playerInput = playerRigid != null ? playerRigid.linearVelocity : Vector2.zero;
 
@@ -210,7 +215,21 @@ public class FCS : MonoBehaviour
             transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotateSpeed/5f);
             if (upperBodyTrs != null) upperBodyTrs.rotation = transform.rotation;
         }
+    }
 
+    private void RotateLowerBody()
+    {
+        Vector2 playerInput = playerRigid != null ? playerRigid.linearVelocity : Vector2.zero;
+
+        if (lowerBodyTrs != null)
+        {
+            if(playerInput.sqrMagnitude > 0.01f)
+            {
+                float angle = Mathf.Atan2(playerInput.y, playerInput.x) * Mathf.Rad2Deg - 90f;
+                Quaternion targetRotation = Quaternion.Euler(0, 0, angle);
+                lowerBodyTrs.rotation = Quaternion.Slerp(lowerBodyTrs.rotation, targetRotation, Time.deltaTime * rotateSpeed);
+            }
+        }
     }
     private void UpdateListData(List<EnemyData> list)
     {
