@@ -364,7 +364,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd733c66574f38740afc6efbce04e280, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InputController
-  moveType: 2
+  moveType: 1
   inputVec: {x: 0, y: 0}
   limitWeightMaxSpeed: 0
   normalMaxSpeed: 0

@@ -9,7 +9,7 @@ public enum MoveType
 
 public class InputController : MonoBehaviour
 {
-    public MoveType moveType;
+    private MoveType moveType;
 
     Rigidbody2D playerRigid;
     public Vector2 inputVec;
@@ -35,35 +35,10 @@ public class InputController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        HowtoMove(moveType);
+        Move();
     }
 
-    private void HowtoMove(MoveType _moveType)
-    {
-        if (_moveType == MoveType.Leg)
-        {
-            LegMove();
-        }
-        else if (_moveType == MoveType.Fly)
-        {
-            FlyMove();
-        }
-
-        LimitSpeed();
-    }
-
-    private void LegMove()
-    {
-        if (inputVec != Vector2.zero)
-        {
-            float curSpeed = Mathf.Min(PlayerInfo.Instance.axel / 4f, PlayerInfo.Instance.maxSpeed / 4f);
-            Vector2 force = playerRigid.position + inputVec * curSpeed * Time.fixedDeltaTime;
-            playerRigid.MovePosition(force);
-        }
-    }
-
-
-    private void FlyMove()
+    private void Move()
     {
         if (inputVec != Vector2.zero)
         {
@@ -83,18 +58,6 @@ public class InputController : MonoBehaviour
         else
         {
             playerRigid.linearVelocity = new Vector2(playerRigid.linearVelocity.x * stopFric, playerRigid.linearVelocity.y * stopFric);
-        }
-    }
-
-    private void LimitSpeed()
-    {
-        PlayerInfo.Instance.maxSpeed = PlayerInfo.Instance.curWeight >= PlayerInfo.Instance.limitWeight ? limitWeightMaxSpeed : normalMaxSpeed;
-
-        Vector2 velocity = playerRigid.linearVelocity;
-
-        if (velocity.magnitude > PlayerInfo.Instance.maxSpeed)
-        {
-            playerRigid.linearVelocity = velocity.normalized * PlayerInfo.Instance.maxSpeed;
         }
     }
 }
