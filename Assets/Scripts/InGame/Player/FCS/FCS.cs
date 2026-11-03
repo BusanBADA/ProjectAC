@@ -202,7 +202,7 @@ public class FCS : MonoBehaviour
 
                 Quaternion targetRotation = Quaternion.Euler(0, 0, angle);
 
-                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotateSpeed);
+                upperBodyTrs.transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotateSpeed);
                 if (upperBodyTrs != null) upperBodyTrs.rotation = transform.rotation;//Mouse
             }
         }
@@ -212,7 +212,7 @@ public class FCS : MonoBehaviour
 
             Quaternion targetRotation = Quaternion.Euler(0, 0, angle);
 
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotateSpeed/5f);
+            upperBodyTrs.transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotateSpeed/5f);
             if (upperBodyTrs != null) upperBodyTrs.rotation = transform.rotation;
         }
     }

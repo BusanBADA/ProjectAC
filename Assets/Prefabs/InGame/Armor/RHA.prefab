@@ -102,7 +102,7 @@ GameObject:
   - component: {fileID: 8483878801369175655}
   - component: {fileID: -7640307159713286460}
   m_Layer: 0
-  m_Name: Armor1
+  m_Name: RHA
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -136,7 +136,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c7f38d0e113db7488fb5615ca248cae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ArmorData
-  armorPrefab: {fileID: 6690980313807085164}
+  armorPF: {fileID: 6690980313807085164}
+  armorID: 
   isEquipped: 0
-  RHA: 0
-  isCompositeArmor: 0
+  armorWeight: 0
+  maxDurability: 100
+  currentDurability: 0
+  armorType: 1
+  apResistance: 0
