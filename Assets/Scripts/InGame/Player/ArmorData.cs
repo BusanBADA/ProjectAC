@@ -20,10 +20,12 @@ public class ArmorData : MonoBehaviour
     [Header("Status")]
     public float maxDurability = 100f;//최대 내구도
     public float currentDurability;//현재 내구도
+    public float DEF;//기본 방어력 
+
 
     [Header("ArmorType")]
     public ArmorType armorType;//타입
 
     [Header("[only CompositeArmor status]")]
-    public float apResistance; // AP탄(고관통탄)에 대한 방어력
+    public float apDEF; // AP탄(고관통탄)에 대한 방어력 계수(1.4)
 }
