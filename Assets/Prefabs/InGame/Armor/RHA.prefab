@@ -137,10 +137,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ArmorData
   armorPF: {fileID: 6690980313807085164}
-  armorID: 
+  armorID: RHA
   isEquipped: 0
   armorWeight: 0
   maxDurability: 100
   currentDurability: 0
+  DEF: 0
   armorType: 1
-  apResistance: 0
+  apDEF: 0
