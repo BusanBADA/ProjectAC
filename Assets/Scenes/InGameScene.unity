@@ -412,6 +412,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1070026363}
   - component: {fileID: 1070026362}
+  - component: {fileID: 1070026364}
   m_Layer: 0
   m_Name: MapManager
   m_TagString: Untagged
@@ -431,7 +432,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36a02c66f9b91ad4b91714e9334480e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoomPCG
-  targetRoomCount: 12
+  targetRoomCount: 30
   seed: 12345
   roomStep: {x: 20, y: 12}
   roomsRoot: {fileID: 0}
@@ -450,6 +451,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1070026364
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1070026361}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef54617b8ad81d64b9f9eeeb8debd20e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InGameScene
+  roomPCG: {fileID: 1070026362}
+  playerPrefab: {fileID: 1814325809}
+  stageSeed: 77777
 --- !u!1 &1814325809
 GameObject:
   m_ObjectHideFlags: 0
