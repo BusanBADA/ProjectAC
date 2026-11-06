@@ -31,11 +31,11 @@ public class EnemyMovement_Basic : MonoBehaviour
 
         if (distance > maxDistance)
         {
-            transform.position += (Vector3)(direction * moveSpeed * Time.deltaTime);
+            rb.MovePosition(rb.position + direction * moveSpeed * Time.fixedDeltaTime);
         }
         else if (distance < minDistance)
         {
-            transform.position -= (Vector3)(direction * moveSpeed * Time.deltaTime);
+            rb.MovePosition(rb.position - direction * moveSpeed * Time.fixedDeltaTime);
         }
     }
 }
