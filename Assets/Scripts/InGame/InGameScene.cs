@@ -6,6 +6,9 @@ public class InGameScene : MonoBehaviour
     [SerializeField] private GameObject playerPrefab;
     [SerializeField] private int stageSeed = 12345;
 
+    [SerializeField]
+    private CameraFollow cameraFollow;//플레이어가 카메라 추적을 위해 추가
+
     private GameObject playerInstance;
 
     private void Start()
@@ -36,6 +39,10 @@ public class InGameScene : MonoBehaviour
         if (playerPrefab != null)
         {
             playerInstance = Instantiate(playerPrefab, spawnPosition, Quaternion.identity);
+        }
+        if (cameraFollow != null)
+        {
+            cameraFollow.SetTarget(playerInstance.transform); //카메라 추적
         }
         else
         {
