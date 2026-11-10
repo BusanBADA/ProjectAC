@@ -4,7 +4,7 @@ public enum ArmorType
 {
     None,
     RHA,
-    Composite,
+    Composite
 }
 
 
@@ -24,12 +24,13 @@ public class ArmorData : MonoBehaviour
     public float apDEF; // 관통에 대한 방어력 계수
     public float bombDEF; //폭발에 대한 방어력 계수
 
+    [Header("areaPerEffectiveArmor")]
+    public float area;           // 면적
+    public float effectiveArmor; //유효장갑량
+    public float areaPerEffectiveArmor;//면적당 유효장갑량
+
     [Header("ArmorType")]
     public ArmorType armorType;//타입
-
-    [Header("[only Crusher status]")]
-    public float damage; // 크러셔가 주는 데미지
-    public float knockback; // 죽지 않은 적 밀치기
 
     // 장갑 종류를 바꿨을 때 기본 계수를 자동으로 잡아주는 편의 기능
     public void SetArmor(ArmorType _type)
@@ -38,20 +39,38 @@ public class ArmorData : MonoBehaviour
 
         switch (_type)
         {
-            case ArmorType.RHA:
-                apDEF = 1f;   
+            case ArmorType.None://X
+                def = 0f;
+                apDEF = 0f;
+                bombDEF = 0f;
+                armorWeight = 0f;
+
+                area = 0f;
+                effectiveArmor = 0f;
+                break;
+
+            case ArmorType.RHA://일반 장갑
+                def = 0f;
+                apDEF = 1f;
                 bombDEF = 1f;
+                armorWeight = 30f;
+
+                area = 10f;
+                effectiveArmor = 10f;
                 break;
 
             case ArmorType.Composite:
-                apDEF = 1.4f;   // 관통에 강함
-                bombDEF = 1.8f; // 폭발에 강함
-                break;
+                def = 0f;
+                apDEF = 1.6f;   // 관통에 강함
+                bombDEF = 1.2f; // 폭발에 약간 강함
+                armorWeight = 40f;
 
-            case ArmorType.None:
-                apDEF = 0f;
-                bombDEF = 0f;
+                area = 10f;
+                effectiveArmor = 20f;
                 break;
         }
+
+        //면적당 유효장갑량
+        effectiveArmor = area * areaPerEffectiveArmor;
     }
 }
