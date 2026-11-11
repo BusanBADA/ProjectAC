@@ -1,5 +1,12 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
+public enum ProjectileOwner
+{
+    Player,
+    Enemy
+
+}
+
 
 public class Projectile2D : MonoBehaviour
 {
@@ -31,6 +38,13 @@ public class Projectile2D : MonoBehaviour
     // Prevent a single projectile from applying duplicate hit damage to the same surface.
     // Penetration cost is calculated independently for each internal segment.
     private readonly HashSet<IPenetrable> damagedSurfaces = new();
+
+    private ProjectileOwner owner;
+
+    public void SetOwner(ProjectileOwner newOwner)
+    {
+        owner = newOwner;
+    }
 
     private struct HitTraversal
     {
@@ -124,11 +138,36 @@ public class Projectile2D : MonoBehaviour
 
         Collider2D[] candidates = Physics2D.OverlapAreaAll(min, max, armorLayerMask);
 
+        foreach (Collider2D candidate in candidates)
+        {
+            Debug.Log($"감지된 오브젝트: {candidate.name}, Layer: {LayerMask.LayerToName(candidate.gameObject.layer)}");
+        }
+
         var hits = new List<HitTraversal>();
         var seenSurfaces = new HashSet<IPenetrable>();
+        string targetTag = owner == ProjectileOwner.Player ? "Enemy" : "Player";
 
         foreach (Collider2D candidate in candidates)
         {
+            Debug.Log($"탄환 소유자: {owner}, 충돌 대상: {candidate.name}, 최상위 오브젝트: {candidate.transform.root.name}");
+
+            Transform current = candidate.transform;
+            bool isTarget = false;
+
+            while (current != null)
+            {
+                if (current.CompareTag(targetTag))
+                {
+                    isTarget = true;
+                    break;
+                }
+
+                current = current.parent;
+            }
+
+            if (!isTarget)
+                continue;
+
             // Retrieve the penetration surface from the Armor layer's collider.
             IPenetrable surface = candidate.GetComponent(typeof(IPenetrable)) as IPenetrable;
 
@@ -160,6 +199,7 @@ public class Projectile2D : MonoBehaviour
             {
                 hits.Add(new HitTraversal(surface, traversal));
             }
+
         }
 
         // 3. Process armor starting from the first one encountered along the bullet's trajectory.

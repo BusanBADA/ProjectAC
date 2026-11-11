@@ -1,15 +1,24 @@
-﻿using UnityEngine;
+﻿using Unity.VisualScripting;
+using UnityEngine;
+using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 
 public class EnemyMovement_Basic : MonoBehaviour
 {
-    private Transform player;
+    [SerializeField] private float moveSpeed = 2f;
     [SerializeField] private float desiredDistance = 5f;
-    [SerializeField] private float minDistance = 3f;
-    [SerializeField] private float maxDistance = 7f;
-    [SerializeField] private float moveSpeed = 3f;
+    [SerializeField] private float distanceRange = 1f;
+
+    private Transform player;
     private Rigidbody2D rb;
 
+    public bool IsMoving { get; private set; }
+
     private void Awake()
+    {
+        rb = GetComponent<Rigidbody2D>();
+    }
+
+    private void Start()
     {
         GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
 
@@ -17,25 +26,30 @@ public class EnemyMovement_Basic : MonoBehaviour
         {
             player = playerObject.transform;
         }
-        rb = GetComponent<Rigidbody2D>();
     }
+
     private void FixedUpdate()
     {
-        if (player == null) return;
-
         float distance = Vector2.Distance(transform.position, player.position);
 
-        Debug.Log("플레이어와의 거리: " + distance);
-
-        Vector2 direction = ((Vector2)player.position - (Vector2)transform.position).normalized;
-
-        if (distance > maxDistance)
+        if (distance > desiredDistance + distanceRange)
         {
+            IsMoving = true;
+
+            Vector2 direction = ((Vector2)player.position - rb.position).normalized;
             rb.MovePosition(rb.position + direction * moveSpeed * Time.fixedDeltaTime);
         }
-        else if (distance < minDistance)
+        else if (distance < desiredDistance - distanceRange)
         {
-            rb.MovePosition(rb.position - direction * moveSpeed * Time.fixedDeltaTime);
+            IsMoving = true;
+
+            Vector2 direction = (rb.position - (Vector2)player.position).normalized;
+            rb.MovePosition(rb.position + direction * moveSpeed * Time.fixedDeltaTime);
+        }
+        else
+        {
+            IsMoving = false;
+            rb.linearVelocity = Vector2.zero;
         }
     }
 }
