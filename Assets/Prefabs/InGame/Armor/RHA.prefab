@@ -101,6 +101,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8483878801369175655}
   - component: {fileID: 622498951681713222}
+  - component: {fileID: -4625918655259200553}
   m_Layer: 0
   m_Name: RHA
   m_TagString: Untagged
@@ -138,10 +139,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ArmorData
   armorPF: {fileID: 6690980313807085164}
   armorID: RHA
-  isEquipped: 0
   armorWeight: 0
   maxDurability: 100
-  currentDurability: 0
   def: 0
   apDEF: 0
   bombDEF: 0
@@ -149,3 +148,18 @@ MonoBehaviour:
   effectiveArmor: 0
   areaPerEffectiveArmor: 0
   armorType: 1
+--- !u!114 &-4625918655259200553
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6690980313807085164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a33bbe145be49b46b87259e53d44def, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ArmorRuntimeData
+  armorDatabase: {fileID: 622498951681713222}
+  currentDurability: 0
+  isEquipped: 0
