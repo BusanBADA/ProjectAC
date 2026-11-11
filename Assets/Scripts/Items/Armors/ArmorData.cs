@@ -14,12 +14,10 @@ public class ArmorData : MonoBehaviour
 
     [Header("Armor Info")]
     public string armorID;//ID
-    public bool isEquipped;//장착여부
     public float armorWeight;//무게
 
     [Header("Status")]
     public float maxDurability = 100f;//최대 내구도
-    public float currentDurability;//현재 내구도
     public float def;//기본 방어력 
     public float apDEF; // 관통에 대한 방어력 계수(관통탄에 대해서 def * apDEF)
     public float bombDEF; //폭발에 대한 방어력 계수(폭발탄에 대해서 def * bombDEF)
