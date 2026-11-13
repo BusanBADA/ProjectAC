@@ -1,4 +1,4 @@
-
+﻿
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -11,15 +11,23 @@ public class Weapon2D : MonoBehaviour
     [Header("Auto Fire")]
     [SerializeField] private bool autoFire = true;
     [SerializeField, Min(0.01f)] private float fireInterval = 1.0f;
+    [SerializeField]
+    private ProjectileOwner projectileOwner = ProjectileOwner.Player;
+    private bool canFire;
 
     private float nextFireTime;
 
     private void Update()
     {
-        if (autoFire)
+        if (autoFire && canFire)
         {
             TryFire();
         }
+
+    }
+    public void SetCanFire(bool value)
+    {
+        canFire = value;
     }
 
     private void TryFire()
@@ -32,6 +40,13 @@ public class Weapon2D : MonoBehaviour
 
         nextFireTime = Time.time + fireInterval;
 
-        Instantiate(projectilePrefab, muzzle.position,muzzle.rotation);
+        GameObject projectile = Instantiate(
+        projectilePrefab,
+        muzzle.position,
+        muzzle.rotation
+        );
+
+        Projectile2D projectileScript = projectile.GetComponent<Projectile2D>();
+        projectileScript.SetOwner(projectileOwner);
     }
 }
