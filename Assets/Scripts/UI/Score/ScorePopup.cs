@@ -14,8 +14,17 @@ public class ScorePopup : MonoBehaviour
     private Vector2 startPosition = Vector2.zero;
     private float elapsedTime = 0f;
 
-    public void SetScore(int InScore)
+    public void SetScore(int InScore, Vector2 InStartPosition)
     {
+        if (rectTransform == null)
+        {
+            rectTransform = GetComponent<RectTransform>();
+        }
+
+        startPosition = InStartPosition;
+        rectTransform.anchoredPosition = startPosition;
+        elapsedTime = 0f;
+
         if (scoreText != null)
         {
             scoreText.text = "+" + InScore.ToString();

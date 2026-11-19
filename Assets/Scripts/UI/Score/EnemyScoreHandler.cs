@@ -22,7 +22,12 @@ public class EnemyScoreHandler : MonoBehaviour
 
         if (targetCanvas == null)
         {
-            targetCanvas = FindFirstObjectByType<Canvas>();
+            GameObject canvasObject = GameObject.Find("ScoreCanvas");
+
+            if (canvasObject != null)
+            {
+                targetCanvas = canvasObject.GetComponent<Canvas>();
+            }
         }
     }
 
@@ -45,14 +50,14 @@ public class EnemyScoreHandler : MonoBehaviour
         {
             return;
         }
-        
+
         Vector3 worldPosition = transform.position + popupOffset;
 
         Vector2 screenPosition =
             RectTransformUtility.WorldToScreenPoint(
                 Camera.main,
                 worldPosition
-                );
+            );
 
         RectTransform canvasRect =
             targetCanvas.GetComponent<RectTransform>();
@@ -69,10 +74,6 @@ public class EnemyScoreHandler : MonoBehaviour
             targetCanvas.transform
         );
 
-        RectTransform popupRect = popup.GetComponent<RectTransform>();
-        popupRect.anchoredPosition = localPosition;
-
-        popup.SetScore(killScore);
+        popup.SetScore(killScore, localPosition);
     }
 }
-    
