@@ -1,5 +1,7 @@
 using UnityEngine;
-
+/// <summary>
+/// ¹Ì´Ï¸Ê UI
+/// </summary>
 public class MiniMapUIController : MonoBehaviour
 {
     [Header("Mini Map UI")]

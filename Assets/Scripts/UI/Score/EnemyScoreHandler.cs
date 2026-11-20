@@ -1,5 +1,7 @@
 using UnityEngine;
-
+/// <summary>
+/// 적의 사망 여부를 확인 및 점수
+/// </summary>
 public class EnemyScoreHandler : MonoBehaviour
 {
     [Header("Enemy")]

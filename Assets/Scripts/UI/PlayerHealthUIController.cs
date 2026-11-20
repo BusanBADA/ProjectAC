@@ -1,6 +1,8 @@
 using System.Collections;
 using UnityEngine;
-
+/// <summary>
+/// 플레이어 체력 UI
+/// </summary>
 public class PlayerHealthUIController : MonoBehaviour
 {
     [Header("Health UI Settings")]

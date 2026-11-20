@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
-
+/// <summary>
+/// 옵션 설정
+/// </summary>
 public class OptionsController : MonoBehaviour
 {
     [Header("Options Panel")]

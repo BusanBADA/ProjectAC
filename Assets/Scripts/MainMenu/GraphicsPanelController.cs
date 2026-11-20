@@ -4,6 +4,9 @@ using TMPro;
 using System.Collections.Generic;
 using NUnit.Framework;
 
+/// <summary>
+/// 그래픽 설정 UI
+/// </summary>
 public class GraphicsPanelController : MonoBehaviour
 {
     [Header("Resolution Settings")]
