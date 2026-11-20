@@ -1,6 +1,8 @@
 using TMPro;
 using UnityEngine;
-
+/// <summary>
+/// 적 처치 시 획득한 점수를 화면에 표시
+/// </summary>
 public class ScorePopup : MonoBehaviour
 {
     [Header("Score Text")]

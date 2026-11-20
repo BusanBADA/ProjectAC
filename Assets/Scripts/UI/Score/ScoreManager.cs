@@ -1,3 +1,6 @@
+/// <summary>
+/// 게임 전체의 점수
+/// </summary>
 public static class ScoreManager
 {
     public static int TotalScore { get; private set; } = 0;

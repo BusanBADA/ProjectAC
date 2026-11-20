@@ -2,7 +2,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
-
+/// <summary>
+/// ¿Œ∞‘¿” HUD
+/// </summary>
 public class InGameHUDController : MonoBehaviour
 {
     [Header("Mech Health")]

@@ -1,6 +1,9 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// 메인 메뉴
+/// </summary>
 public class MainMenuController : MonoBehaviour
 {
     [Header("Scene Settings")]

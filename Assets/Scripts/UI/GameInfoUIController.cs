@@ -1,7 +1,9 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
-
+/// <summary>
+/// 게임 진행 중 필요한 안내 UI
+/// </summary>
 public class GameInfoUIController : MonoBehaviour
 {
     public void ShowMapName(string inMapName)

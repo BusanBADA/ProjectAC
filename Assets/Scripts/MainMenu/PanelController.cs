@@ -1,5 +1,7 @@
 using UnityEngine;
-
+/// <summary>
+/// UI 패널의 표시 및 전환
+/// </summary>
 public class PanelController : MonoBehaviour
 {
     [Header("Settings Panels")]

@@ -1,5 +1,7 @@
 using UnityEngine;
-
+/// <summary>
+/// 전체 지도 UI
+/// </summary>
 public class FullMapUIController : MonoBehaviour
 {
     [Header("Full Map UI")]
