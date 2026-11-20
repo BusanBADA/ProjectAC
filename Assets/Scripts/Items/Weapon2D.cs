@@ -13,7 +13,7 @@ public class Weapon2D : MonoBehaviour
     [SerializeField, Min(0.01f)] private float fireInterval = 1.0f;
     [SerializeField]
     private ProjectileOwner projectileOwner = ProjectileOwner.Player;
-    private bool canFire;
+    private bool canFire = true;
 
     private float nextFireTime;
 
