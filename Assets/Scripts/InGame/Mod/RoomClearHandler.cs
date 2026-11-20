@@ -18,6 +18,7 @@ public class RoomClearHandler : MonoBehaviour
     {
         eliminationMode.onCleared += HandleRoomClear;
     }
+
     private void HandleRoomClear()
     {
         if (room == null)
@@ -31,11 +32,13 @@ public class RoomClearHandler : MonoBehaviour
                 continue;
 
             door.SetConnected(true);
+            door.Open();
+
+            Debug.Log(
+                $"{door.name} 연결: {door.IsConnected}, 열림: {door.IsOpen}"
+            );
         }
-
-        Debug.Log("[RoomClearHandler] 섬멸전 클리어! 모든 문 개방 완료!");
     }
-
 
 
     private void OnDisable()
